@@ -17,7 +17,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.modsoptimizer.config;
+package de.markusbordihn.modsoptimizer.config.database;
 
 import java.util.Arrays;
 import java.util.List;

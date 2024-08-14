@@ -17,37 +17,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.modsoptimizer.config;
+package de.markusbordihn.modsoptimizer.config.database;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class ServerModsDatabase {
+public class DefaultModsDatabase {
 
-  /** List of server side mods, which are confirmed to be server-side only! */
-  private static final List<String> serverSideModsList =
+  /** List of mods, which are needed on both sides! */
+  private static final List<String> defaultSideModsList =
       Arrays.asList(
-          "adaptive_performance_tweaks",
-          "adaptive_performance_tweaks_core",
-          "adaptive_performance_tweaks_gamerules",
-          "adaptive_performance_tweaks_items",
-          "adaptive_performance_tweaks_player",
-          "adaptive_performance_tweaks_spawn",
-          "alternate-current",
-          "chunk-sending-forge-fabric",
-          "deathbackup",
-          "discordsrv",
-          "e4mc",
-          "leaky",
-          "publicguiannouncement",
-          "quick-leaf-decay",
-          "simplebackups",
-          "smoothchunk",
-          "villagerdeathmessages");
+          "ageingspawners",
+          "appleskin",
+          "attributefix",
+          "betterstrongholds",
+          "humancompanions",
+          "kobolds",
+          "lootr",
+          "paraglider",
+          "starterkit",
+          "tumbleweed");
 
-  protected ServerModsDatabase() {}
+  protected DefaultModsDatabase() {}
 
-  public static List<String> getServerSideModsList() {
-    return serverSideModsList;
+  public static List<String> getDefaultModsList() {
+    return defaultSideModsList;
   }
 }
