@@ -34,7 +34,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import org.jetbrains.annotations.NotNull;
 
 public class ModsDatabaseConfig {
 
@@ -223,7 +222,6 @@ public class ModsDatabaseConfig {
     return file;
   }
 
-  @NotNull
   private static Map<String, String> getSortedModDatabaseMap() {
     Map<String, String> modIdMap = new HashMap<>();
     for (String modId : ClientModsDatabase.getClientSideModsList()) {
