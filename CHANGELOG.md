@@ -5,6 +5,12 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [GitHub History][history] instead.
 
+### v2.1.0
+
+- Fixed #22 by refactored code for 1.20.6 and higher.
+- Fixed #21, #20, #18 by updating internal client side database.
+- Added additional test cases.
+
 ### v2.0.0
 
 - Added JSON parse with additional checks, to avoid crashes on invalid .json files. #17

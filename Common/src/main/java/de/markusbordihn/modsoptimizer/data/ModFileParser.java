@@ -50,6 +50,8 @@ public class ModFileParser {
   public static final String MANIFEST_FML_MOD_TYPE = "FMLModType";
   public static final DateTimeFormatter dateTimeFormatter =
       DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
+  public static final DateTimeFormatter dateTimeNanoFormatter =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.n");
 
   protected ModFileParser() {}
 
@@ -105,6 +107,8 @@ public class ModFileParser {
     // File based check for data packs, Forge and Fabric mods.
     if (jarFile.getEntry("META-INF/mods.toml") != null) {
       return ModType.FORGE;
+    } else if (jarFile.getEntry("META-INF/neoforge.mods.toml") != null) {
+      return ModType.NEOFORGE;
     } else if (jarFile.getEntry("fabric.mod.json") != null) {
       return ModType.FABRIC;
     } else if (jarFile.getEntry("quilt.mod.json") != null) {
@@ -211,7 +215,8 @@ public class ModFileParser {
   }
 
   public static ModFileData parseNeoForgeModFile(Manifest manifest, Path path, JarFile jarFile) {
-    ModFileData modFileData = parseForgeModFile(manifest, path, jarFile);
+    ModFileData modFileData =
+        parseModFileData(Path.of("META-INF/neoforge.mods.toml"), manifest, path, jarFile);
     return new ModFileData(
         modFileData.path(),
         modFileData.id(),
@@ -223,6 +228,20 @@ public class ModFileParser {
   }
 
   public static ModFileData parseForgeModFile(Manifest manifest, Path path, JarFile jarFile) {
+    ModFileData modFileData =
+        parseModFileData(Path.of("META-INF/mods.toml"), manifest, path, jarFile);
+    return new ModFileData(
+        modFileData.path(),
+        modFileData.id(),
+        ModType.FORGE,
+        modFileData.name(),
+        modFileData.version(),
+        modFileData.environment(),
+        modFileData.timestamp());
+  }
+
+  public static ModFileData parseModFileData(
+      Path modsFile, Manifest manifest, Path path, JarFile jarFile) {
     String modId = ModFileData.EMPTY_MOD_ID;
     String name = ModFileData.EMPTY_MOD_NAME;
     Version version = ModFileData.EMPTY_VERSION;
@@ -230,7 +249,7 @@ public class ModFileParser {
     LocalDateTime timestamp = ModFileData.EMPTY_TIMESTAMP;
 
     // Parse mods.toml file
-    Toml modsToml = TomlFileParser.readTomlFile(jarFile, Path.of("META-INF/mods.toml"));
+    Toml modsToml = TomlFileParser.readTomlFile(jarFile, modsFile);
     if (modsToml != null && !modsToml.isEmpty()) {
       String modsPrefix = "mods[0].";
       String modsVersionId = modsPrefix + "version";
@@ -315,7 +334,7 @@ public class ModFileParser {
         }
       }
     } else {
-      Constants.LOG.warn("⚠ Found no META-INF/mods.toml file for {}!", path);
+      Constants.LOG.warn("⚠ Found no {} file for {}!", modsFile, path);
     }
 
     // Add manifest information, if available.
@@ -384,7 +403,7 @@ public class ModFileParser {
       }
     }
 
-    return new ModFileData(path, modId, ModType.FORGE, name, version, environment, timestamp);
+    return new ModFileData(path, modId, ModType.UNKNOWN, name, version, environment, timestamp);
   }
 
   public static ModFileData parseQuiltModFile(Manifest manifest, Path path, JarFile jarFile) {
@@ -553,11 +572,16 @@ public class ModFileParser {
   }
 
   private static LocalDateTime parseTimestamp(String timestamp) {
-    if (timestamp != null && !timestamp.isEmpty()) {
+    if (timestamp == null || timestamp.isEmpty()) {
+      return ModFileData.EMPTY_TIMESTAMP;
+    }
+    try {
+      return LocalDateTime.parse(timestamp, dateTimeFormatter);
+    } catch (Exception e) {
       try {
-        return LocalDateTime.parse(timestamp, dateTimeFormatter);
-      } catch (Exception e) {
-        Constants.LOG.warn("Was unable to parse timestamp {}:", timestamp);
+        return LocalDateTime.parse(timestamp, dateTimeNanoFormatter);
+      } catch (Exception e2) {
+        Constants.LOG.warn("Was unable to parse timestamp {}:{}", timestamp, e2);
       }
     }
     return ModFileData.EMPTY_TIMESTAMP;

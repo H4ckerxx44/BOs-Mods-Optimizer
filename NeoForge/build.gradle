@@ -1,12 +1,10 @@
 plugins {
-  id 'idea'
   id 'maven-publish'
-  id 'net.neoforged.gradle.userdev' version '7.0.41'
-  id 'java-library'
+  id 'net.neoforged.gradle.userdev' version '7.0.116'
   id 'com.matthewprenger.cursegradle' version '1.4.0'
   id 'nu.studer.credentials' version '3.0'
   id "com.modrinth.minotaur" version "2.+"
-  id 'com.github.johnrengelman.shadow' version '7.1.2'
+  id 'com.gradleup.shadow' version '8.3.0'
 }
 
 base {

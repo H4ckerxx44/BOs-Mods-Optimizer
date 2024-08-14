@@ -58,6 +58,11 @@ class ModDataTests {
     assertEquals(ModType.NEOFORGE, neoModFileData01.modType());
     assertEquals(ModEnvironment.DEFAULT, neoModFileData01.environment());
     assertNotEquals(ModFileData.EMPTY_MOD_ID, neoModFileData01.id());
+
+    ModFileData neoModFileData02 = ModData.readModInfo(testModFiles, "neoforge_test_mod_02.jar");
+    assertEquals(ModType.NEOFORGE, neoModFileData02.modType());
+    assertEquals(ModEnvironment.DEFAULT, neoModFileData02.environment());
+    assertNotEquals(ModFileData.EMPTY_MOD_ID, neoModFileData02.id());
   }
 
   @Test
@@ -81,6 +86,11 @@ class ModDataTests {
     assertEquals(ModType.FORGE, modFileData04.modType());
     assertEquals(ModEnvironment.DEFAULT, modFileData04.environment());
     assertNotEquals(ModFileData.EMPTY_MOD_ID, modFileData04.id());
+
+    ModFileData modFileData05 = ModData.readModInfo(testModFiles, "forge_test_mod_05.jar");
+    assertEquals(ModType.FORGE, modFileData05.modType());
+    assertEquals(ModEnvironment.DEFAULT, modFileData05.environment());
+    assertNotEquals(ModFileData.EMPTY_MOD_ID, modFileData05.id());
   }
 
   @Test
@@ -89,6 +99,11 @@ class ModDataTests {
     assertEquals(ModType.FABRIC, fabricModFileData01.modType());
     assertEquals(ModEnvironment.DEFAULT, fabricModFileData01.environment());
     assertNotEquals(ModFileData.EMPTY_MOD_ID, fabricModFileData01.id());
+
+    ModFileData fabricModFileData02 = ModData.readModInfo(testModFiles, "fabric_test_mod_02.jar");
+    assertEquals(ModType.FABRIC, fabricModFileData02.modType());
+    assertEquals(ModEnvironment.DEFAULT, fabricModFileData02.environment());
+    assertNotEquals(ModFileData.EMPTY_MOD_ID, fabricModFileData02.id());
   }
 
   @Test
@@ -112,7 +127,7 @@ class ModDataTests {
   @Test
   void testReadModInfo_NeoForge_Samples() {
     ModFileData sampleModFileData01 =
-        ModData.readModInfo(testModClientSampleFiles, "appleskin-neoforge-mc1.20.2-2.5.1.jar");
+        ModData.readModInfo(testModClientSampleFiles, "appleskin-neoforge-mc1.20.5-3.0.5.jar");
     assertEquals(ModType.NEOFORGE, sampleModFileData01.modType());
     assertEquals(ModEnvironment.CLIENT, sampleModFileData01.environment());
     assertNotEquals(ModFileData.EMPTY_MOD_ID, sampleModFileData01.id());
@@ -138,6 +153,30 @@ class ModDataTests {
     assertEquals(ModType.FORGE, sampleModFileData03.modType());
     assertEquals(ModEnvironment.DEFAULT, sampleModFileData03.environment());
     assertNotEquals(ModFileData.EMPTY_MOD_ID, sampleModFileData03.id());
+
+    ModFileData sampleModFileData04 =
+        ModData.readModInfo(testModBothSampleFiles, "easy_npc-forge-1.20.6-5.2.2.jar");
+    assertEquals(ModType.FORGE, sampleModFileData04.modType());
+    assertEquals(ModEnvironment.DEFAULT, sampleModFileData04.environment());
+    assertNotEquals(ModFileData.EMPTY_MOD_ID, sampleModFileData04.id());
+  }
+
+  @Test
+  void testReadModInfo_Fabric_Default_Samples() {
+    ModFileData sampleModFileData01 =
+        ModData.readModInfo(testModBothSampleFiles, "easy_npc-fabric-1.20.6-5.2.2.jar");
+    assertEquals(ModType.FABRIC, sampleModFileData01.modType());
+    assertEquals(ModEnvironment.DEFAULT, sampleModFileData01.environment());
+    assertNotEquals(ModFileData.EMPTY_MOD_ID, sampleModFileData01.id());
+  }
+
+  @Test
+  void testReadModInfo_NeoForge_Default_Samples() {
+    ModFileData sampleModFileData01 =
+        ModData.readModInfo(testModBothSampleFiles, "easy_npc-neoforge-1.20.6-5.2.2.jar");
+    assertEquals(ModType.NEOFORGE, sampleModFileData01.modType());
+    assertEquals(ModEnvironment.DEFAULT, sampleModFileData01.environment());
+    assertNotEquals(ModFileData.EMPTY_MOD_ID, sampleModFileData01.id());
   }
 
   @Test

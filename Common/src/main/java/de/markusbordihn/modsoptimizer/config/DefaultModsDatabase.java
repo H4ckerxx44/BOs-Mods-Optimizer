@@ -28,6 +28,7 @@ public class DefaultModsDatabase {
   private static final List<String> defaultSideModsList =
       Arrays.asList(
           "ageingspawners",
+          "appleskin",
           "attributefix",
           "betterstrongholds",
           "humancompanions",

@@ -25,18 +25,15 @@ import cpw.mods.modlauncher.api.IEnvironment;
 import de.markusbordihn.modsoptimizer.Constants;
 import de.markusbordihn.modsoptimizer.data.GameEnvironment;
 import de.markusbordihn.modsoptimizer.service.ModsOptimizerService;
-import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforgespi.locating.IDependencyLocator;
+import net.neoforged.neoforgespi.locating.IDiscoveryPipeline;
 import net.neoforged.neoforgespi.locating.IModFile;
-import net.neoforged.neoforgespi.locating.IModLocator;
 
-public class ModLocatorService implements IModLocator {
+public class ModLocatorService implements IDependencyLocator {
 
   public ModLocatorService() {
 
@@ -73,29 +70,7 @@ public class ModLocatorService implements IModLocator {
   }
 
   @Override
-  public List<ModFileOrException> scanMods() {
+  public void scanMods(List<IModFile> list, IDiscoveryPipeline iDiscoveryPipeline) {
     Constants.LOG.debug("scanMods");
-    return Collections.emptyList();
-  }
-
-  @Override
-  public String name() {
-    return "adaptive_performance_tweaks_mod_optimizer";
-  }
-
-  @Override
-  public void scanFile(IModFile modFile, Consumer<Path> pathConsumer) {
-    Constants.LOG.debug("scanFile {} {}", modFile, pathConsumer);
-  }
-
-  @Override
-  public void initArguments(Map<String, ?> arguments) {
-    Constants.LOG.debug("initArguments: {}", arguments);
-  }
-
-  @Override
-  public boolean isValid(IModFile modFile) {
-    Constants.LOG.debug("isValid {}", modFile);
-    return false;
   }
 }
